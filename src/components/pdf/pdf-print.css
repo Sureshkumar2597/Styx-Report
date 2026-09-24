@@ -1,0 +1,524 @@
+/* ======================================================================
+   Scoped print styles for PDF export only. Everything here is prefixed
+   with .report-pdf-root so it can NEVER leak into the interactive
+   screen version of the report.
+   ====================================================================== */
+
+.report-pdf-root {
+  background: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.report-pdf-root * {
+  animation: none !important;
+  transition: none !important;
+  -webkit-animation: none !important;
+}
+
+.report-pdf-root [data-hover-only],
+.report-pdf-root [data-tooltip],
+.report-pdf-root [data-floating-control],
+.report-pdf-root .sticky,
+.report-pdf-root [data-sticky] {
+  display: none !important;
+}
+
+.report-pdf-root table {
+  break-inside: avoid;
+}
+
+/* ----------------------------------------------------------------------
+   PAGE GEOMETRY
+   ---------------------------------------------------------------------- */
+
+.report-pdf-root .pdf-page {
+  position: relative;
+  width: 794px;
+  height: 1123px;
+  overflow: hidden;
+  background: #ffffff;
+  margin-bottom: 24px;
+}
+.report-pdf-root .pdf-cover-hex-top {
+  position: relative;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+}
+.report-pdf-root .pdf-page:last-child {
+  margin-bottom: 0;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="1"] {
+  background: #111739;
+}
+.report-pdf-root .pdf-page-body--bleed-top {
+  padding-top: 0;
+}
+.report-pdf-root .pdf-page[data-pdf-page="1"] .pdf-page-body {
+  display: block;
+}
+
+.report-pdf-root .pdf-cover {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.report-pdf-root .pdf-cover-hex-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.report-pdf-root .pdf-cover-hex-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 280px;
+  height: auto;
+  display: block;
+}
+
+.report-pdf-root .pdf-cover-panel {
+  position: absolute;
+  top: 38%;
+  left: 0;
+  width: 60%;
+  height: 56%;
+  background: #1c2451;
+  box-sizing: border-box;
+}
+
+.report-pdf-root .pdf-cover-panel-inner {
+  position: relative;
+  height: 100%;
+  padding: 48px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-pdf-root .pdf-cover-heading {
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.3;
+  margin-bottom: 24px;
+}
+
+.report-pdf-root .pdf-cover-company-name {
+  color: #f5820f;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.15;
+  margin: 0 0 16px;
+  max-width: 90%;
+}
+
+.report-pdf-root .pdf-cover-date {
+  color: #ffffff;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.report-pdf-root .pdf-cover-logo {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  height: 32px;
+  width: auto;
+}
+
+/* ----------------------------------------------------------------------
+   PAGE BODY
+   ---------------------------------------------------------------------- */
+
+.report-pdf-root .pdf-page-body {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.report-pdf-root .pdf-page-body--bleed-top {
+  padding-top: 0;
+}
+
+.report-pdf-root .pdf-page-body--centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Reserve clearance below the new solid banner header, so content
+   never sits underneath it. */
+.report-pdf-root .pdf-page-body--has-banner {
+  padding-top: 64px;
+  box-sizing: border-box;
+}
+.report-pdf-root .pdf-page[data-pdf-page="4"] .pdf-page-body--has-banner {
+  padding-top: 0px !important;
+  margin-bottom: -30px !important;
+}
+/* Page 1 (Hero) specifically — vertically center Hero's content
+   within the full page height. */
+.report-pdf-root .pdf-page[data-pdf-page="1"] .pdf-page-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ----------------------------------------------------------------------
+   HEADER — transparent overlay, used only on Hero's page (page 1).
+   ---------------------------------------------------------------------- */
+
+.report-pdf-root .pdf-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 0;
+  display: flex;
+  align-items: flex-start;
+  padding: 24px 40px 0;
+  pointer-events: none;
+  background: transparent;
+}
+
+.report-pdf-root .pdf-header-logo {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+/* ----------------------------------------------------------------------
+   HEADER BANNER — solid navy bar with title + logo, used on page 2+
+   (any page with a plain white body, per the Figma "External Cyber
+   Risk Assessment" bar design).
+   ---------------------------------------------------------------------- */
+
+.report-pdf-root .pdf-header-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  height: 64px;
+  background: #111739;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.report-pdf-root .pdf-header-banner-title {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.report-pdf-root .pdf-header-banner-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+}
+
+/* ----------------------------------------------------------------------
+   FOOTER — always flush to the physical bottom of the page.
+   ---------------------------------------------------------------------- */
+
+.report-pdf-root .pdf-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 40px;
+  background: #111739;
+}
+
+.report-pdf-root .pdf-footer-logo {
+  height: 16px;
+  width: auto;
+  display: block;
+}
+
+.report-pdf-root .pdf-footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.report-pdf-root .pdf-footer-page,
+.report-pdf-root .pdf-footer-copyright {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.4;
+}
+/* ======================================================================
+   PAGE 5 - Timeline
+   ====================================================================== */
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] .pdf-page-body--has-banner {
+  padding-top: 40px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] #timeline {
+  margin: 0;
+  padding-top: 0;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] .eyebrow {
+  margin-bottom: 8px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] .section-title {
+  margin: 0 0 10px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] .section-sub {
+  margin-bottom: 18px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] .timeline-box {
+  margin-top: 16px;
+  padding: 20px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="5"] .chart-legend {
+  margin-bottom: 16px;
+}
+
+/* ======================================================================
+   PAGE 6 - Malware Families
+   ====================================================================== */
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] .pdf-page-body--has-banner {
+  padding-top: 40px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] #families {
+  margin: 0;
+  padding-top: 0;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] .eyebrow {
+  margin-bottom: 8px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] .section-title {
+  margin: 0 0 10px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] > p,
+.report-pdf-root .pdf-page[data-pdf-page="6"] #families > p {
+  margin-bottom: 18px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] .panel {
+  margin-top: 16px;
+  padding: 20px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] .fam-row {
+  min-height: 40px;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="6"] .foot-note {
+  margin-top: 16px;
+}
+/* ==========================================================================
+   PDF COVER PAGE FIX
+   Place this at the VERY END of pdf-print.css
+   ========================================================================== */
+/* ======================================================================
+   PDF COVER PAGE
+   ====================================================================== */
+
+.report-pdf-root .pdf-page[data-pdf-page="1"] {
+  background: #111739;
+}
+
+.report-pdf-root .pdf-page[data-pdf-page="1"] .pdf-page-body {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.report-pdf-root .pdf-cover {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #111739;
+}
+
+/* ---------- Top decorative hexagon ---------- */
+
+.report-pdf-root .pdf-cover-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 0;
+}
+
+/* ---------- Bottom decorative hexagon ---------- */
+
+.report-pdf-root .pdf-cover-bottom {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 280px;
+  height: auto;
+  display: block;
+  z-index: 0;
+}
+
+/* ---------- Main content panel ---------- */
+
+.report-pdf-root .pdf-cover-panel {
+  position: absolute;
+  top: 38%;
+  left: 0;
+  width: 60%;
+  height: 56%;
+  background: #1c2451;
+  box-sizing: border-box;
+
+  padding: 48px 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 1;
+}
+
+/* ---------- Cover title ---------- */
+
+.report-pdf-root .pdf-cover-title {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 20px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.3;
+
+  margin: 0 0 24px;
+}
+
+/* ---------- Company name ---------- */
+
+.report-pdf-root .pdf-cover-company {
+  color: #f5820f;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.15;
+
+  margin: 0 0 16px;
+
+  max-width: 90%;
+}
+
+/* ---------- Metadata ---------- */
+
+.report-pdf-root .pdf-cover-meta {
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1.6;
+  opacity: 0.85;
+
+  margin: 0 0 24px;
+}
+
+.report-pdf-root .pdf-cover-meta span {
+  display: inline;
+}
+
+/* ---------- Description ---------- */
+
+.report-pdf-root .pdf-cover-description {
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.85;
+
+  margin: 0;
+}
+
+/* ---------- Styx logo - TOP RIGHT ---------- */
+
+.report-pdf-root .pdf-page[data-pdf-page="1"] .pdf-cover-logo-top-right {
+  position: absolute !important;
+  top: 40px !important;
+  right: 40px !important;
+  left: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: 32px !important;
+  margin: 0 !important;
+  z-index: 10 !important;
+}
+
+/* ---------- Confidential - BOTTOM ---------- */
+
+.report-pdf-root .pdf-cover-confidential {
+  position: absolute;
+
+  left: 40px;
+  bottom: 24px;
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  z-index: 3;
+}
+/* Remove any body offset or centering */
+/* .report-pdf-root .pdf-page[data-pdf-page="1"] .pdf-page-body {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+  justify-content: unset !important;
+  align-items: unset !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+} */

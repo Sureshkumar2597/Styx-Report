@@ -1,0 +1,55 @@
+:root {
+  /* ===== exact old dark palette (unchanged values) ===== */
+  --bg: #080b14;
+  --bg-1: #0d1220;
+  --panel: #111828;
+  --panel-2: #151d30;
+  --border: #232c42;
+  --border-soft: #1a2236;
+  --text: #e8ecf6;
+  --text-mid: #a6afc7;
+  --text-dim: #636e8c;
+  --orange: #ff9301;
+  --orange-deep: #c85000;
+  --critical: #ff4d4d;
+  --vhigh: #ff9301;
+  --high: #f5a623;
+  --medium: #2997f6;
+  --good: #22c55e;
+  --mono: "Lexend", ui-monospace, monospace;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --heading: var(--mono);
+
+  /* ===== fixed "always-dark" chrome tokens (topbar/hero/locked/unlock) ===== */
+  --fx-bg: #080b14;
+  --fx-hero-grad: linear-gradient(180deg, #0a0e1c 0%, #080b14 100%);
+  --fx-panel: #111828;
+  --fx-panel-2: #151d30;
+  --fx-border: #232c42;
+  --fx-text: #fff;
+  --fx-text-mid: #a6afc7;
+  --fx-text-dim: #636e8c;
+  --fx-orange: #ff9301;
+
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+[data-theme="light"] {
+  --bg: #f7f9fc;
+  --bg-1: #edf2fa;
+  --panel: #ffffff;
+  --panel-2: #ffffff;
+  --border: #e2e8f3;
+  --border-soft: #eaeef6;
+  --text: #132238;
+  --text-mid: #516277;
+  --text-dim: #7d8da5;
+  --orange: #ff8b00;
+  --orange-deep: #c86200;
+  --critical: #f2453d;
+  --vhigh: #ff8b00;
+  --high: #f5a623;
+  --medium: #2e90fa;
+  --good: #22c55e;
+  --heading: "Lexend", "Inter", -apple-system, sans-serif;
+}

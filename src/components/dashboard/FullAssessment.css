@@ -1,0 +1,277 @@
+/* =====================================================
+   FULL ASSESSMENT ("locked" / teaser) SECTION
+   
+   UI-only redesign: the background shows a visually 
+   blurred and darkened preview of the actual PDF cover.
+   ===================================================== */
+
+.fa-section {
+  padding: 52px 0;
+  scroll-margin-top: 170px !important;
+}
+
+.fa-wrap {
+  max-width: var(--container-max-width, 1080px);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Header ---------- */
+
+.fa-panel-head {
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+  text-align: left;
+}
+
+.fa-section-title {
+  font-family: "Lexend", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+}
+
+/* ---------- Teaser wrapper ---------- */
+
+.fa-teaser-wrap {
+  position: relative;
+  margin: 26px 0 4px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(79, 150, 255, 0.3);
+
+  /* Restored to original height and removed narrow aspect ratio 
+     so it spans full width while fitting the form */
+  min-height: 820px;
+}
+
+/* ---------- PDF Cover Preview Background ---------- */
+
+.fa-pdf-cover-preview {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  filter: blur(2.5px) brightness(0.85); /* Adjusted blur for better visibility */
+  transform: scale(1.02); /* Slight scale to hide edges */
+  pointer-events: none;
+  background-color: #111739;
+}
+
+/* Ensure any internal structure stretches to the container */
+.fa-pdf-cover-preview > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------- Overlay: premium glass card holding the unlock form ---------- */
+
+.fa-teaser-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  overflow-y: auto;
+  background: linear-gradient(
+    180deg,
+    rgba(6, 10, 20, 0.15) 0%,
+    rgba(6, 10, 20, 0.45) 45%,
+    rgba(6, 10, 20, 0.85) 100%
+  );
+}
+
+.fa-unlock-card {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2.25rem 2rem;
+  border-radius: 24px;
+  background: linear-gradient(
+    165deg,
+    rgba(26, 30, 44, 0.82) 0%,
+    rgba(13, 17, 28, 0.72) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  text-align: left;
+  animation: fa-card-in 0.4s ease-out;
+}
+
+.fa-unlock-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(79, 195, 247, 0.35),
+    rgba(255, 147, 1, 0.15) 45%,
+    transparent 75%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.fa-unlock-card-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--Styx-primary-orange, #ff9301);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.fa-unlock-card-title {
+  color: #fff;
+  font-family: "Lexend", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 8px;
+}
+
+@keyframes fa-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =====================================================
+   PDF COVER PREVIEW FALLBACK STYLES
+   Adaptive positioning so it scales nicely horizontally 
+   without breaking the container size.
+   ===================================================== */
+
+.fa-pdf-cover-preview .pdf-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #111739;
+  overflow: hidden;
+  font-family: "Sora", sans-serif;
+}
+
+.fa-pdf-cover-preview .pdf-cover-top {
+  position: absolute;
+  top: -5%;
+  left: 0;
+  width: 100%;
+  height: auto;
+  min-height: 250px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.fa-pdf-cover-preview .pdf-cover-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: clamp(280px, 40%, 600px); /* Adaptively resize the bottom hexagon */
+  height: auto;
+}
+
+.fa-pdf-cover-preview .pdf-cover-panel {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Centered vertically to always look good */
+  left: 0;
+  width: clamp(320px, 50%, 650px); /* Won't stretch awkwardly on ultrawide */
+  background: #1c2451;
+  padding: 40px 5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.3);
+}
+
+.fa-pdf-cover-preview .pdf-cover-title {
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.3;
+  margin: 0 0 24px;
+}
+
+.fa-pdf-cover-preview .pdf-cover-company {
+  color: #f5820f;
+  font-weight: 700;
+  font-size: clamp(32px, 4vw, 56px); /* Adaptive typography */
+  line-height: 1.15;
+  margin: 0 0 20px;
+  max-width: 90%;
+}
+
+.fa-pdf-cover-preview .pdf-cover-meta,
+.fa-pdf-cover-preview .pdf-cover-description {
+  color: #ffffff;
+  font-size: clamp(12px, 1vw, 14px);
+  opacity: 0.85;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.fa-pdf-cover-preview .pdf-cover-logo {
+  height: clamp(24px, 2.5vw, 36px);
+  width: auto;
+  margin-top: 10px;
+}
+
+/* ---------- Responsive Adjustments ---------- */
+
+@media (max-width: 860px) {
+  .fa-teaser-wrap {
+    min-height: 880px;
+  }
+}
+
+@media (max-width: 520px) {
+  .fa-wrap {
+    padding: 0 16px;
+  }
+
+  .fa-section-title {
+    font-size: 24px;
+  }
+
+  .fa-teaser-overlay {
+    padding: 20px 14px;
+  }
+
+  .fa-unlock-card {
+    max-width: 100%;
+    padding: 1.75rem 1.25rem;
+    border-radius: 18px;
+  }
+
+  .fa-unlock-card-title {
+    font-size: 19px;
+  }
+
+  .fa-pdf-cover-preview .pdf-cover-panel {
+    width: 85%;
+    padding: 30px;
+  }
+}

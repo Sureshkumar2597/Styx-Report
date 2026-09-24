@@ -1,0 +1,452 @@
+/* =========================================================
+   ThankYouPage
+   Fully theme-aware: every color consumed here resolves
+   through the app's existing design tokens (falling back to
+   sensible defaults when a token isn't defined upstream).
+
+   Theme is driven ONLY by the app's data-theme attribute —
+   set both on <html> by ThemeProvider, and directly on this
+   page's own root element via useThemeContext() in the TSX.
+   There is intentionally NO prefers-color-scheme fallback:
+   once the app has an explicit, known theme, the OS setting
+   must never override it.
+   ========================================================= */
+
+.typ-wrap {
+  width: 100%;
+  min-height: calc(
+    100dvh - var(--topbar-height, 80px) - var(--footer-height, 96px)
+  );
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+
+  /* Local design-token bridge, defaulted to light so the page never
+     renders unstyled before the data-theme attribute is read. This is
+     just an initial value — both selector blocks below (matched via
+     ancestor OR self attribute) immediately override it as soon as
+     either <html> or this element itself carries data-theme. */
+  background-color: #ffffff;
+  --typ-heading: var(--Dark-heading-colour, #2d3a4f);
+  --typ-text: var(--Dark-text-colour, #475875);
+  --typ-accent: var(--Styx-primary-orange, #ff9301);
+  --typ-surface: #ffffff;
+  --typ-border: var(--Border-colour, #d5d5d5);
+}
+
+/* ---- Light theme ----------------------------------------------------
+   Matches either the app-wide attribute on <html> (ancestor selector)
+   or the attribute set directly on this element (self selector), so
+   this page is correct whether it inherits theme from the app shell
+   or is rendered/tested standalone. */
+[data-theme="light"] .typ-wrap,
+.typ-wrap[data-theme="light"] {
+  background-color: #ffffff;
+  --typ-heading: var(--Dark-heading-colour, #2d3a4f);
+  --typ-text: var(--Dark-text-colour, #475875);
+  --typ-surface: #ffffff;
+  --typ-border: var(--Border-colour, #d5d5d5);
+}
+
+/* ---- Dark theme ------------------------------------------------------ */
+[data-theme="dark"] .typ-wrap,
+.typ-wrap[data-theme="dark"] {
+  background-color: var(--Surface-colour, #0b1120);
+  --typ-heading: var(--Dark-heading-colour, #ffffff);
+  --typ-text: var(--Dark-text-colour, rgba(255, 255, 255, 0.65));
+  --typ-surface: var(--Surface-colour, #0b1120);
+  --typ-border: var(--Border-colour, #595959);
+}
+
+/* NOTE: no @media (prefers-color-scheme: dark) block here on purpose.
+   The app always knows its theme (ThemeProvider defaults to "light" on
+   first visit and persists to localStorage), so OS preference must
+   never be consulted — that was the root cause of this page showing
+   dark mode while the rest of the app was light. */
+
+.typ-content {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: typ-fade-in 0.5s ease-out;
+}
+
+/* ---------------- Icon ---------------- */
+
+.typ-icon-wrap {
+  position: relative;
+  width: 150px;
+  height: 130px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typ-glow {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--typ-accent) 0%, transparent 70%);
+  opacity: 0.22;
+  filter: blur(6px);
+  animation: typ-glow-pulse 2.6s ease-in-out infinite;
+}
+
+.typ-float {
+  position: relative;
+  width: 140px;
+  height: 105px;
+  animation: typ-float 3.2s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+
+.typ-icon-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18));
+  animation: typ-icon-drop-in 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.typ-laptop-screen {
+  fill: var(--typ-heading);
+}
+
+.typ-laptop-inner {
+  fill: var(--typ-surface);
+}
+
+.typ-laptop-base {
+  fill: var(--typ-heading);
+  opacity: 0.85;
+}
+
+.typ-doc-line {
+  fill: var(--typ-text);
+  opacity: 0;
+  transform-origin: left center;
+  animation: typ-line-in 0.35s ease-out forwards;
+}
+
+.typ-doc-line-1 {
+  animation-delay: 0.55s;
+}
+.typ-doc-line-2 {
+  animation-delay: 0.7s;
+}
+.typ-doc-line-3 {
+  animation-delay: 0.85s;
+}
+
+.typ-badge {
+  position: absolute;
+  right: 4px;
+  bottom: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--typ-surface);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  opacity: 0;
+  transform: scale(0.3);
+  animation: typ-badge-pop 0.5s 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Semantic status colors — intentionally hardcoded, these carry
+   meaning (success/error/in-progress) independent of theme. */
+.typ-badge-success {
+  background: #22c55e;
+}
+
+.typ-badge-error {
+  background: #ef4444;
+}
+
+.typ-badge-uploading {
+  background: var(--typ-accent);
+}
+
+.typ-badge-svg {
+  width: 20px;
+  height: 20px;
+}
+
+.typ-badge-stroke {
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.typ-badge-check {
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: typ-check-draw 0.35s 1.35s ease-out forwards;
+}
+
+.typ-badge-dot {
+  fill: #ffffff;
+}
+
+.typ-badge-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  animation: typ-spin 0.7s linear infinite;
+}
+
+/* ---------------- Heading ---------------- */
+
+.typ-heading {
+  margin: 0 0 0.75rem;
+  color: var(--typ-heading);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  max-width: 100%;
+
+  /* Styx-Web-H1, scaled down to match the flat thank-you layout */
+  font-family: "Lexend", sans-serif;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.typ-heading-line {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.typ-email-highlight {
+  color: var(--typ-accent);
+}
+
+/* ---------------- Paragraph ---------------- */
+
+.typ-subtext {
+  margin: 0 0 1.75rem;
+  max-width: 460px;
+  color: var(--typ-text);
+  text-align: center;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -0.2px;
+}
+
+/* ---------------- Actions ---------------- */
+
+.typ-actions {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.typ-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 0.6rem 1.75rem;
+  text-align: center;
+
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: -0.2px;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.typ-btn:focus-visible {
+  outline: 2px solid var(--typ-accent);
+  outline-offset: 3px;
+}
+
+.typ-btn-primary {
+  background: var(--typ-accent);
+  color: #1e1e1e;
+  box-shadow: 0 8px 22px rgba(255, 147, 1, 0.28);
+}
+
+.typ-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(255, 147, 1, 0.36);
+}
+
+.typ-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  color: #1e1e1e;
+}
+
+.typ-btn-secondary {
+  background: transparent;
+  color: var(--typ-heading);
+  border: 1.5px solid var(--typ-border);
+}
+
+.typ-btn-secondary:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 147, 1, 0.08);
+  border-color: var(--typ-accent);
+}
+
+/* ---------------- Keyframes ---------------- */
+
+@keyframes typ-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typ-icon-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes typ-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes typ-glow-pulse {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.18;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.3;
+  }
+}
+
+@keyframes typ-line-in {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes typ-badge-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-20deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.15) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes typ-check-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes typ-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------- Responsive ---------------- */
+
+@media (max-width: 560px) {
+  .typ-wrap {
+    min-height: calc(
+      100dvh - var(--topbar-height, 64px) - var(--footer-height, 120px)
+    );
+    padding: 1.5rem 1rem;
+  }
+
+  .typ-heading {
+    font-size: 22px;
+  }
+
+  .typ-subtext {
+    font-size: 13px;
+    line-height: 19px;
+  }
+
+  .typ-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .typ-btn {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typ-float,
+  .typ-glow,
+  .typ-badge-spinner,
+  .typ-content {
+    animation: none;
+  }
+  .typ-icon-svg,
+  .typ-doc-line,
+  .typ-badge,
+  .typ-badge-check {
+    animation-duration: 0.01ms;
+    animation-fill-mode: forwards;
+  }
+}

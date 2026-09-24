@@ -1,0 +1,42 @@
+.blur-text {
+  filter: blur(6px);
+  transition: filter 0.25s ease;
+  cursor: pointer;
+
+  /* Prevent selection */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  /* Prevent mobile selection */
+  -webkit-touch-callout: none;
+
+  /* Prevent drag */
+  -webkit-user-drag: none;
+
+  /* Disable pointer text cursor */
+  caret-color: transparent;
+}
+
+.blur-text::selection {
+  background: transparent;
+}
+
+.blur-text::-moz-selection {
+  background: transparent;
+}
+
+.blur-text.revealed {
+  filter: blur(0);
+  cursor: text;
+
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+
+  -webkit-touch-callout: default;
+  -webkit-user-drag: auto;
+  caret-color: auto;
+}

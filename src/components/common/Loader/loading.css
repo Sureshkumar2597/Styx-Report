@@ -1,0 +1,298 @@
+/* =====================================================================
+   LOADING MODULE
+   The above-the-fold loading state reuses the real .hero markup and
+   CSS directly (see LoadingHero.tsx). This file holds:
+   1) loading-only utility classes the hero needs
+   2) shimmer styling + placeholder widths/heights ONLY.
+
+   Layout (flex/grid, padding, gap, alignment) for every skeleton element
+   comes from the production stylesheet via the production classes the
+   skeleton reuses directly: .eyebrow, .section-title, .orange, .red,
+   .section-sub, .summary-list/li/.marker/.txt, .stat-grid/.stat-card/
+   .stat-card-inner/.stat-label/.stat-num, .spot-box, .timeline-box,
+   .finding, .panel, .fam-row, .locked-card, etc. This file must never
+   redefine any of that — only the shimmer bars standing in for text.
+
+   All motion is transform/opacity only. One timer total (message
+   rotation) — see useScanSequence.ts.
+   ===================================================================== */
+
+.ldg-root {
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------
+   HERO CONTENT — loading-only utilities
+   --------------------------------------------------------------------- */
+
+.ldg-desc-wrap {
+  display: block;
+  min-height: 50px;
+}
+
+.ldg-stat-shimmer {
+  height: 52px;
+  width: 70%;
+  margin: 0 auto 8px;
+  border-radius: 6px;
+}
+
+/* ---------------------------------------------------------------------
+   SHIMMER — shared by every skeleton bar
+
+   `.ldg-bar` carries a min-width/min-height safety net so that if a
+   size modifier class ever fails to apply (wrong class name, missed
+   CSS import, parent font-size collapsing to 0, etc.) the bar still
+   renders as a visible placeholder instead of empty space. Modifier
+   classes below override these with their real intended size.
+   --------------------------------------------------------------------- */
+
+.ldg-bar {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  vertical-align: middle;
+  min-width: 60px;
+  min-height: 10px;
+}
+
+[data-theme="light"] .ldg-bar {
+  background: #e7ebf3;
+}
+
+.ldg-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate3d(-100%, 0, 0);
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 70%
+  );
+  animation: ldgShimmer 1.8s ease-in-out infinite;
+}
+
+[data-theme="light"] .ldg-shimmer::after {
+  background: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.65) 50%,
+    transparent 70%
+  );
+}
+
+@keyframes ldgShimmer {
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   SKELETON
+   --------------------------------------------------------------------- */
+
+.ldg-skeleton {
+  position: relative;
+  z-index: 1;
+  background: var(--fx-bg, #05070d);
+}
+
+[data-theme="light"] .ldg-skeleton {
+  background: #f5f7fb;
+}
+
+.ldg-section {
+  padding: 56px 0; /* horizontal max-width/padding comes from .wrap */
+}
+
+/* =====================================================================
+   SUMMARY
+   Every element below sits INSIDE a real production class (.eyebrow,
+   .orange, .red, .section-sub, .txt, .stat-label, .stat-num). Sizes are
+   now explicit px values (not `em`) so a placeholder can never collapse
+   to zero — it no longer depends on a parent's computed font-size being
+   present. Nothing here overrides margin, padding, gap, or flex
+   behavior from the production stylesheet.
+   ===================================================================== */
+
+/* ---------- eyebrow ---------- */
+
+.ldg-skel-eyebrow {
+  display: inline-block;
+  width: 320px;
+  height: 15px;
+}
+
+/* ---------- title: two independent bars, one per span ---------- */
+
+.ldg-skel-title-orange {
+  display: inline-block;
+  width: 138px;
+  height: 21px;
+}
+
+.ldg-skel-title-red {
+  display: inline-block;
+  width: 237px;
+  height: 21px;
+}
+
+/* ---------- section-sub (single paragraph, wraps naturally) ---------- */
+
+.ldg-skel-sub-line {
+  display: block;
+  width: 100%;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.ldg-skel-sub-line-full {
+  width: 96%;
+}
+
+.ldg-skel-sub-line-partial {
+  width: 58%;
+  margin-bottom: 0;
+}
+
+/* ---------- summary-list bullets ----------
+   .summary-list / li / .marker / .txt already provide the real padding,
+   gap, and marker column; only the text run inside .txt is a shimmer
+   line. `display: block` + explicit px height/width guarantees the bar
+   renders even if `.txt` has no inherited font-size context. */
+
+.ldg-skel-bullet-line {
+  display: block;
+  height: 14px;
+  width: 100%;
+  min-width: 180px;
+}
+
+.ldg-skel-bullet-1 {
+  width: 88%;
+}
+.ldg-skel-bullet-2 {
+  width: 96%;
+}
+.ldg-skel-bullet-3 {
+  width: 73%;
+}
+.ldg-skel-bullet-4 {
+  width: 91%;
+}
+.ldg-skel-bullet-5 {
+  width: 82%;
+}
+.ldg-skel-bullet-6 {
+  width: 97%;
+}
+.ldg-skel-bullet-7 {
+  width: 68%;
+}
+
+/* ---------- stat cards ----------
+   .stat-grid / .stat-card / .stat-card-inner / .stat-label / .stat-num
+   already define height, padding, flex alignment and gap in production
+   CSS. Nothing is redeclared here — only the placeholder content inside
+   .stat-label and .stat-num, given fixed px dimensions so the card
+   never renders as a blank box. */
+
+.ldg-skel-stat-card {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="light"] .ldg-skel-stat-card {
+  border-color: #e7ebf3;
+}
+
+.ldg-skel-stat-label-line {
+  display: inline-block;
+  width: 105px;
+  height: 11px;
+}
+
+.ldg-skel-stat-num {
+  display: inline-block;
+  width: 63px;
+  height: 20px;
+}
+
+/* ---------- Other sections (unchanged) ---------- */
+
+.ldg-skel-line {
+  height: 12px;
+  margin-bottom: 10px;
+}
+
+.ldg-skel-title {
+  height: 20px;
+  width: 40%;
+  margin-bottom: 18px;
+}
+
+.ldg-skel-donut {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+}
+
+.ldg-skel-legend-item {
+  width: 120px;
+  height: 12px;
+}
+
+.ldg-skel-chart {
+  height: 260px;
+  width: 100%;
+}
+
+.ldg-skel-hygiene {
+  height: 22px;
+  width: 100%;
+}
+
+.ldg-skel-fill {
+  height: 100%;
+  width: 100%;
+}
+
+.ldg-skel-title-wide {
+  width: 55%;
+  height: 12px;
+  margin-bottom: 10px;
+}
+
+.ldg-skel-title-full {
+  width: 85%;
+  height: 12px;
+  margin-bottom: 10px;
+}
+
+.ldg-skel-redact-1 {
+  width: 90%;
+}
+.ldg-skel-redact-2 {
+  width: 70%;
+}
+.ldg-skel-redact-3 {
+  width: 80%;
+}
+
+.ldg-sev-ghost {
+  visibility: hidden;
+}
+
+/* ---------------------------------------------------------------------
+   REDUCED MOTION
+   --------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ldg-shimmer::after {
+    animation: none !important;
+    display: none;
+  }
+}

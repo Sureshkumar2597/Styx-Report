@@ -1,0 +1,31 @@
+/*
+ * Styx Dashboard base styles.
+ *
+ * Scoped under .styx-dashboard to avoid leaking styles into the
+ * surrounding WordPress theme, and to avoid the theme leaking styles
+ * into the app. Keep all app styles nested under this root class.
+ */
+
+.styx-dashboard {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1a1a1a;
+}
+
+.styx-dashboard *,
+.styx-dashboard *::before,
+.styx-dashboard *::after {
+  box-sizing: inherit;
+}
+
+.styx-dashboard__header h1 {
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+}
+
+.styx-dashboard__content code {
+  background: #f0f0f0;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}

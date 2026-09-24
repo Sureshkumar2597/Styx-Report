@@ -1,0 +1,358 @@
+/* =========================================================
+   UnlockForm — visual layer only. No business logic here.
+   Classes are prefixed `ulf-` to avoid clashing with any
+   existing global styles on .unlock-box / .unlock-title etc.
+
+   This file is imported by both UnlockForm.tsx (the standalone
+   section) and UnlockFormFields.tsx (the shared field markup),
+   and by FullAssessment.tsx where the same fields are embedded
+   inside the premium glass overlay card. No changes were needed
+   here for the FullAssessment redesign — the overlay card itself
+   is styled in FullAssessment.css.
+   ========================================================= */
+
+.ulf-box {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: rgba(20, 22, 30, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #f2f3f5;
+}
+
+.ulf-form-state {
+  animation: ulf-fade-in 0.35s ease-out;
+}
+
+.ulf-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.ulf-sub {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(242, 243, 245, 0.72);
+}
+
+.ulf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.ulf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ulf-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.ulf-input::placeholder {
+  color: rgba(242, 243, 245, 0.4);
+}
+
+.ulf-input:hover:not(:disabled) {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.ulf-input:focus {
+  outline: none;
+  border-color: #34d399;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ulf-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ulf-input-err {
+  border-color: #f87171 !important;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15) !important;
+}
+
+.ulf-error-text {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #fca5a5;
+}
+
+.ulf-submit-btn {
+  margin-top: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.25);
+}
+
+.ulf-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(34, 197, 94, 0.32);
+}
+
+.ulf-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ulf-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ulf-note {
+  margin: 0.9rem 0 0;
+  font-size: 0.78rem;
+  text-align: center;
+  color: rgba(242, 243, 245, 0.5);
+}
+
+@keyframes ulf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .ulf-box {
+    padding: 1.5rem;
+    border-radius: 16px;
+    max-width: 100%;
+  }
+
+  .ulf-title {
+    font-size: 1.25rem;
+  }
+}
+/* =========================================================
+   UnlockForm — visual layer only. No business logic here.
+   Classes are prefixed `ulf-` to avoid clashing with any
+   existing global styles on .unlock-box / .unlock-title etc.
+   ========================================================= */
+
+.ulf-box {
+  position: relative;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: rgba(20, 22, 30, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #f2f3f5;
+}
+
+.ulf-form-state {
+  animation: ulf-fade-in 0.35s ease-out;
+}
+
+.ulf-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.ulf-sub {
+  margin: 0 0 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(242, 243, 245, 0.72);
+}
+
+.ulf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+/* Ensure the wrapper handles absolute positioning for the floating label */
+.ulf-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Base input styles with padding adjusted for the floating label */
+.ulf-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1.4rem 1rem 0.4rem 1rem; /* Extra top padding for the label */
+  border-radius: 8px; /* Slightly tighter radius to match screenshot */
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: #f8fafc; /* Added light background */
+  color: #0f172a; /* Dark text for contrast */
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+  outline: none;
+}
+
+.ulf-input:hover:not(:disabled) {
+  border-color: #cbd5e1;
+}
+
+/* Theme compatible focus state (Orange) */
+.ulf-input:focus {
+  border-color: #2997f6;
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.18);
+  background-color: #ffffff;
+}
+
+.ulf-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ulf-input-err {
+  border-color: #2997f6 !important;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15) !important;
+}
+
+/* The floating label base state */
+.ulf-label {
+  position: absolute;
+  top: 0.95rem; /* Centered vertically when resting */
+  left: 1rem;
+  font-size: 0.95rem;
+  color: #64748b; /* Slate grayish-blue */
+  pointer-events: none; /* Allows clicking through to the input */
+  transition: 0.2s ease all;
+}
+
+/* Move label further up on focus OR when the container has the 'has-value' class */
+.ulf-input:focus ~ .ulf-label,
+.ulf-field.has-value .ulf-label {
+  top: -0.6rem;
+  font-size: 0.7rem;
+  background: #2997f6;
+  padding: 0px 10px;
+  color: #fff;
+}
+
+/* Color the label orange when focused to match theme */
+.ulf-input:focus ~ .ulf-label {
+  font-weight: 600;
+}
+
+.ulf-error-text {
+  margin: 0.4rem 0 0 0;
+  font-size: 0.8rem;
+  color: #fca5a5;
+}
+
+/* Theme compatible submit button (Orange gradient) */
+.ulf-submit-btn {
+  margin-top: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.15s ease;
+  box-shadow: 0 8px 24px rgba(249, 115, 22, 0.25);
+}
+
+.ulf-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(249, 115, 22, 0.32);
+}
+
+.ulf-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ulf-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ulf-note {
+  margin: 0.9rem 0 0;
+  font-size: 0.78rem;
+  text-align: center;
+  color: rgba(242, 243, 245, 0.5);
+}
+
+@keyframes ulf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .ulf-box {
+    padding: 1.5rem;
+    border-radius: 16px;
+    max-width: 100%;
+  }
+
+  .ulf-title {
+    font-size: 1.25rem;
+  }
+}

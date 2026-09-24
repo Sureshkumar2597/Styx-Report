@@ -1,0 +1,21 @@
+.sensitive {
+  display: inline-block;
+  filter: blur(6px);
+  transition: filter 0.25s ease;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  pointer-events: none;
+}
+
+.sensitive.revealed {
+  filter: none;
+
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+
+  pointer-events: auto;
+}
