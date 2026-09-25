@@ -3,6 +3,9 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
+import { initGTM } from "./utils/gtm";
+
+initGTM();
 
 const container =
   document.getElementById("styx-root") || document.getElementById("root");
