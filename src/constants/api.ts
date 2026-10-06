@@ -16,16 +16,20 @@ export const RETRYABLE_STATUS_CODES = [429, 502, 503, 504] as const;
 
 export const API_HEADERS = {
   CONTENT_TYPE: "Content-Type",
-  API_KEY: "api-key",
+  // API_KEY: "api-key",
 } as const;
 
 export const CONTENT_TYPE_JSON = "application/json";
 
+// export const HUDSONROCK_ENDPOINTS = {
+//   OVERVIEW: "/json/v3/search-by-domain/overview",
+//   DISCOVERY: "/json/v3/search-by-domain/discovery",
+//   ASSESSMENT: "/json/v3/search-by-domain/assessment",
+// } as const;
 export const HUDSONROCK_ENDPOINTS = {
-  OVERVIEW: "/json/v3/search-by-domain/overview",
-  DISCOVERY: "/json/v3/search-by-domain/discovery",
-  ASSESSMENT: "/json/v3/search-by-domain/assessment",
+  OVERVIEW: "/overview",
+  DISCOVERY: "/discovery",
+  ASSESSMENT: "/assessment",
 } as const;
-
 export type HudsonRockEndpoint =
   (typeof HUDSONROCK_ENDPOINTS)[keyof typeof HUDSONROCK_ENDPOINTS];

@@ -64,7 +64,8 @@ import {
 } from "../constants/api";
 import type { ApiError } from "../types/api";
 
-const HUDSONROCK_BASE_URL = import.meta.env?.VITE_HUDSONROCK_BASE_URL ?? "";
+// const HUDSONROCK_BASE_URL = import.meta.env?.VITE_HUDSONROCK_BASE_URL ?? "";
+const HUDSONROCK_BASE_URL = "/wp-json/styx-dashboard/v1/hudsonrock";
 const HUDSONROCK_API_KEY = import.meta.env?.VITE_HUDSONROCK_API_KEY ?? "";
 
 /** Warns (without ever logging the key itself) if required env vars are missing. */
@@ -76,16 +77,20 @@ function validateHudsonRockEnv(): void {
     console.error("[HudsonRock] VITE_HUDSONROCK_API_KEY is not set.");
   }
 }
-validateHudsonRockEnv();
+// validateHudsonRockEnv();
 
 export const hudsonRockClient: AxiosInstance = axios.create({
   baseURL: HUDSONROCK_BASE_URL,
   timeout: API_TIMEOUT_MS,
 });
 
+// hudsonRockClient.interceptors.request.use((config) => {
+//   config.headers.set(API_HEADERS.CONTENT_TYPE, CONTENT_TYPE_JSON);
+//   config.headers.set(API_HEADERS.API_KEY, HUDSONROCK_API_KEY);
+//   return config;
+// });
 hudsonRockClient.interceptors.request.use((config) => {
   config.headers.set(API_HEADERS.CONTENT_TYPE, CONTENT_TYPE_JSON);
-  config.headers.set(API_HEADERS.API_KEY, HUDSONROCK_API_KEY);
   return config;
 });
 

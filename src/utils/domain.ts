@@ -6,7 +6,7 @@
    is ever sent to the API.
    ====================================================================== */
 
-const DOMAIN_REGEX = /^(?!-)[a-z0-9-]{1,63}(?<!-)(\.[a-z0-9-]{1,63})+$/;
+const DOMAIN_REGEX = /^(?!-)[a-z0-9-]{1,63}(?<!-)(\.[a-z0-9-]{1,63})+$/i;
 const SCHEME_PREFIX_REGEX = /^[a-z][a-z0-9+.-]*:/i;
 const WHITESPACE_REGEX = /\s/;
 

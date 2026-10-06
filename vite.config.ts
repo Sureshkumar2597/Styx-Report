@@ -4,6 +4,15 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      "/wp-json": {
+        target: "https://riskreport.styxintel.com",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
   build: {
     outDir: path.resolve(__dirname, "../build"),
     assetsDir: "assets",
